@@ -1,0 +1,62 @@
+version: "3.9"
+
+# ApexEval — Student Workspace Compose
+#
+# Spins up N independent code-server sessions, one per student, each with:
+#  - its own bind-mounted workspace volume (persists code + git history)
+#  - its own host port (8443, 8444, 8445, ...)
+#  - the apexeval/student-workspace image (Java 17/21 + Maven + JUnit)
+#
+# Usage:
+#   docker compose up -d           # start all sessions defined below
+#   docker compose up -d student-1 # start only session 1
+#   docker compose down            # stop all
+#
+# To add more students, copy a service block and bump the port + volume path.
+
+services:
+  student-1:
+    image: apexeval/student-workspace:latest
+    container_name: apexeval-student-1
+    platform: linux/arm64
+    ports:
+      - "8443:8443"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Kolkata
+      - PASSWORD=            # empty = no auth, fine for local testing only
+    volumes:
+      - ./workspaces/student-1:/config/workspace
+    restart: unless-stopped
+
+  student-2:
+    image: apexeval/student-workspace:latest
+    container_name: apexeval-student-2
+    platform: linux/arm64
+    ports:
+      - "8444:8443"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Kolkata
+      - PASSWORD=
+    volumes:
+      - ./workspaces/student-2:/config/workspace
+    restart: unless-stopped
+
+  student-3:
+    image: apexeval/student-workspace:latest
+    container_name: apexeval-student-3
+    platform: linux/arm64
+    ports:
+      - "8445:8443"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Kolkata
+      - PASSWORD=
+    volumes:
+      - ./workspaces/student-3:/config/workspace
+    restart: unless-stopped
+

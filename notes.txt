@@ -1,0 +1,2 @@
+junit - 5.10.0
+But for the actual pipeline, /api/run-test should call it internally or invoke the strategy directly after obtaining the diff. We should not make /api/execute responsible for Git diffing itself.

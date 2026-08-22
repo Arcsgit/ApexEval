@@ -1,0 +1,41 @@
+{
+  "schemaVersion": "1.0",
+  "assignmentId": "generic-stack-v1",
+  "version": 1,
+  "status": "APPROVED",
+  "assignmentType": "PLAIN_JAVA",
+  "language": "JAVA",
+  "javaVersion": 17,
+  "buildTool": "MAVEN",
+  "hiddenTestClass": "com.apexeval.assignment.GenericStackTest",
+  "hiddenTestPath": "generic-stack-assignment/hidden-tests/com/apexeval/assignment/GenericStackTest.java",
+  "requiredRules": [
+    {
+      "rule": "USES_TYPE",
+      "value": "ArrayList",
+      "severity": "FLAG",
+      "message": "Use ArrayList as the backing collection"
+    }
+  ],
+  "suspiciousRules": [
+    {
+      "rule": "CONSTANT_RETURN",
+      "severity": "FLAG",
+      "message": "Method appears to return a hardcoded constant"
+    },
+    {
+      "rule": "PRINT_ONLY_METHOD",
+      "severity": "FLAG",
+      "message": "Method contains only a print statement"
+    }
+  ],
+  "execution": {
+    "strategy": "PLAIN_JAVA",
+    "testCommand": "JUNIT_CONSOLE",
+    "timeoutSeconds": 30
+  },
+  "dbVerification": {
+    "applicable": false,
+    "strategy": "NO_OP"
+  }
+}

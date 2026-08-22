@@ -1,0 +1,78 @@
+{
+  "schemaVersion": "1.0",
+  "assignmentId": "movie-watchlist-v1",
+  "version": 1,
+  "status": "APPROVED",
+  "assignmentType": "CORE_JAVA",
+  "language": "JAVA",
+  "javaVersion": 17,
+  "buildTool": "MAVEN",
+  "hiddenTestClass": "com.apexeval.assignment.MovieWatchlistManagementSystemTest",
+  "hiddenTestPath": "movie-watchlist-assignment/hidden-tests/com/apexeval/assignment/MovieWatchlistManagementSystemTest.java",
+  "requiredRules": [
+    {
+      "rule": "USES_TYPE",
+      "value": "ArrayList",
+      "severity": "FLAG",
+      "message": "Use ArrayList<String> to store movie names"
+    },
+    {
+      "rule": "HAS_CLASS",
+      "value": "MovieWatchlistManagementSystem",
+      "severity": "FLAG",
+      "message": "Required main application class MovieWatchlistManagementSystem is missing"
+    },
+    {
+      "rule": "HAS_METHOD",
+      "value": "main",
+      "severity": "FLAG",
+      "message": "main(String[] args) method is required"
+    },
+    {
+      "rule": "EXTENDS_TYPE",
+      "target": "DuplicateMovieException",
+      "value": "Exception",
+      "severity": "FLAG",
+      "message": "DuplicateMovieException must extend Exception"
+    },
+    {
+      "rule": "EXTENDS_TYPE",
+      "target": "MovieNotFoundException",
+      "value": "Exception",
+      "severity": "FLAG",
+      "message": "MovieNotFoundException must extend Exception"
+    },
+    {
+      "rule": "METHOD_FORBIDDEN",
+      "valueList": ["addMovie", "removeMovie", "searchMovie", "displayMovieCount", "sortMovies", "displayMovies"],
+      "severity": "FLAG",
+      "message": "Business operations must be implemented directly inside main(), not as separate methods"
+    }
+  ],
+  "suspiciousRules": [
+    {
+      "rule": "CONSTANT_RETURN",
+      "severity": "FLAG",
+      "message": "Method appears to return a hardcoded constant"
+    },
+    {
+      "rule": "PRINT_ONLY_METHOD",
+      "severity": "FLAG",
+      "message": "Method contains only a print statement"
+    },
+    {
+      "rule": "EMPTY_METHOD",
+      "severity": "FLAG",
+      "message": "Method body is empty"
+    }
+  ],
+  "execution": {
+    "strategy": "PLAIN_JAVA",
+    "testCommand": "JUNIT_CONSOLE",
+    "timeoutSeconds": 30
+  },
+  "dbVerification": {
+    "applicable": false,
+    "strategy": "NO_OP"
+  }
+}
