@@ -28,6 +28,7 @@ services:
       - PASSWORD=            # empty = no auth, fine for local testing only
     volumes:
       - ./workspaces/student-1:/config/workspace
+      - ./fixtures:/opt/fixtures:ro
     restart: unless-stopped
 
   student-2:
@@ -43,6 +44,7 @@ services:
       - PASSWORD=
     volumes:
       - ./workspaces/student-2:/config/workspace
+      - ./fixtures:/opt/fixtures:ro
     restart: unless-stopped
 
   student-3:
@@ -58,5 +60,5 @@ services:
       - PASSWORD=
     volumes:
       - ./workspaces/student-3:/config/workspace
+      - ./fixtures:/opt/fixtures:ro
     restart: unless-stopped
-

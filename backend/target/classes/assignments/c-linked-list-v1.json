@@ -1,0 +1,135 @@
+{
+  "schemaVersion": "1.0",
+  "assignmentId": "c-linked-list-v1",
+  "version": 1,
+  "status": "APPROVED",
+  "technology": "C",
+  "framework": "NONE",
+  "evaluationMode": "CLI",
+  "runtime": {
+    "image": "gcc:13",
+    "version": "13",
+    "env": {}
+  },
+  "build": {
+    "commands": ["make"],
+    "workingDirectory": "/workspace/c-linked-list-assignment",
+    "env": {}
+  },
+  "test": {
+    "commands": ["make test"],
+    "workingDirectory": "/workspace/c-linked-list-assignment",
+    "env": {},
+    "reportFormat": "text",
+    "reportPath": ""
+  },
+  "execution": {
+    "strategy": "C_TEST",
+    "testCommand": "MAKE_TEST",
+    "timeoutSeconds": 60
+  },
+  "assignmentType": "PLAIN_C",
+  "limits": {
+    "timeoutSeconds": 60,
+    "memoryMb": 1024,
+    "cpuCores": 1.0,
+    "maxOutputBytes": 1000000,
+    "maxProcesses": 100,
+    "networkEnabled": false,
+    "privileged": false
+  },
+  "hiddenTests": {
+    "version": "1",
+    "path": "c-linked-list-assignment/hidden-tests/test_linked_list.c",
+    "testClass": "test_runner"
+  },
+  "requiredRules": [
+    {
+      "rule": "HAS_FUNCTION",
+      "value": "list_create",
+      "severity": "FLAG",
+      "message": "Function list_create is required"
+    },
+    {
+      "rule": "HAS_FUNCTION",
+      "value": "list_push_back",
+      "severity": "FLAG",
+      "message": "Function list_push_back is required"
+    },
+    {
+      "rule": "HAS_FUNCTION",
+      "value": "list_push_front",
+      "severity": "FLAG",
+      "message": "Function list_push_front is required"
+    },
+    {
+      "rule": "HAS_FUNCTION",
+      "value": "list_delete",
+      "severity": "FLAG",
+      "message": "Function list_delete is required"
+    },
+    {
+      "rule": "HAS_FUNCTION",
+      "value": "list_contains",
+      "severity": "FLAG",
+      "message": "Function list_contains is required"
+    },
+    {
+      "rule": "HAS_FUNCTION",
+      "value": "list_length",
+      "severity": "FLAG",
+      "message": "Function list_length is required"
+    },
+    {
+      "rule": "HAS_FUNCTION",
+      "value": "list_sum",
+      "severity": "FLAG",
+      "message": "Function list_sum is required"
+    },
+    {
+      "rule": "HAS_FUNCTION",
+      "value": "list_print",
+      "severity": "FLAG",
+      "message": "Function list_print is required"
+    },
+    {
+      "rule": "HAS_FUNCTION",
+      "value": "list_print_reverse",
+      "severity": "FLAG",
+      "message": "Function list_print_reverse is required"
+    },
+    {
+      "rule": "HAS_FUNCTION",
+      "value": "list_clear",
+      "severity": "FLAG",
+      "message": "Function list_clear is required"
+    },
+    {
+      "rule": "HAS_FUNCTION",
+      "value": "main",
+      "severity": "FLAG",
+      "message": "Function main is required"
+    }
+  ],
+  "suspiciousRules": [
+    {
+      "rule": "UNSAFE_STRCPY",
+      "severity": "FLAG",
+      "message": "Avoid strcpy - use strncpy or strlcpy to prevent buffer overflow"
+    },
+    {
+      "rule": "HACK_COMMENT",
+      "severity": "WARN",
+      "message": "Suspicious HACK/TODO/FIXME comment marker in source"
+    }
+  ],
+  "dbVerification": {
+    "applicable": false,
+    "strategy": "NO_OP",
+    "config": {}
+  },
+  "metadata": {
+    "description": "Singly-linked list of integers with CLI driver",
+    "difficulty": "EASY"
+  }
+}

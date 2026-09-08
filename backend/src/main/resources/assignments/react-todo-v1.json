@@ -1,0 +1,61 @@
+{
+  "schemaVersion": "1.0",
+  "assignmentId": "react-todo-v1",
+  "version": 1,
+  "status": "APPROVED",
+  "technology": "JAVASCRIPT",
+  "framework": "REACT",
+  "evaluationMode": "FRONTEND",
+  "runtime": {
+    "image": "node:20-slim",
+    "version": "20",
+    "env": {}
+  },
+  "build": {
+    "commands": [
+      "npm ci"
+    ],
+    "workingDirectory": "/workspace/react-assignment",
+    "env": {}
+  },
+  "test": {
+    "commands": [
+      "npm test -- --watchAll=false"
+    ],
+    "workingDirectory": "/workspace/react-assignment",
+    "env": {},
+    "reportFormat": "junit-xml",
+    "reportPath": "coverage/lcov-report/*.xml"
+  },
+  "limits": {
+    "timeoutSeconds": 120,
+    "memoryMb": 1024,
+    "cpuCores": 1.0,
+    "maxOutputBytes": 1000000,
+    "maxProcesses": 100,
+    "networkEnabled": true,
+    "privileged": false
+  },
+  "hiddenTests": {
+    "version": "1",
+    "path": "react-assignment/hidden-tests/TodoApp.test.js",
+    "testClass": "TodoApp"
+  },
+  "requiredRules": [],
+  "suspiciousRules": [],
+  "dbVerification": {
+    "applicable": false,
+    "strategy": "NO_OP",
+    "config": {}
+  },
+  "metadata": {
+    "description": "React Todo Application with Jest tests",
+    "difficulty": "MEDIUM"
+  },
+  "execution": {
+    "strategy": "JEST",
+    "testCommand": "NPM_TEST",
+    "timeoutSeconds": 120
+  },
+  "assignmentType": "CORE_JAVASCRIPT"
+}

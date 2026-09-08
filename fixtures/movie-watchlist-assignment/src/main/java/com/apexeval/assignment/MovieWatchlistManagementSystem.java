@@ -4,18 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
-class DuplicateMovieException extends Exception {
-    public DuplicateMovieException(String message) {
-        super(message);
-    }
-}
-
-class MovieNotFoundException extends Exception {
-    public MovieNotFoundException(String message) {
-        super(message);
-    }
-}
-
 public class MovieWatchlistManagementSystem {
 
     public static void main(String[] args) {

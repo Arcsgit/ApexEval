@@ -1,0 +1,15 @@
+typedef long size_t;
+typedef struct _IO_FILE FILE;
+extern FILE *stdin;
+extern FILE *stdout;
+extern FILE *stderr;
+extern int printf(const char *format, ...);
+extern int scanf(const char *format, ...);
+extern int fprintf(FILE *stream, const char *format, ...);
+extern int sprintf(char *str, const char *format, ...);
+extern int snprintf(char *str, size_t size, const char *format, ...);
+extern int puts(const char *s);
+extern int getchar(void);
+extern char *gets(char *s);
+extern size_t fread(void *ptr, size_t size, size_t nmemb, FILE *stream);
+extern size_t fwrite(const void *ptr, size_t size, size_t nmemb, FILE *stream);

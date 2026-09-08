@@ -1,0 +1,108 @@
+{
+  "schemaVersion": "1.0",
+  "assignmentId": "python-calculator-v1",
+  "version": 1,
+  "status": "APPROVED",
+  "technology": "PYTHON",
+  "framework": "NONE",
+  "evaluationMode": "CLI",
+  "runtime": {
+    "image": "apexeval/python-runner:latest",
+    "version": "3.12",
+    "env": {}
+  },
+  "build": {
+    "commands": [
+      "python -m py_compile src/main/python/calculator.py"
+    ],
+    "workingDirectory": "/workspace/python-calculator-assignment",
+    "env": {}
+  },
+  "test": {
+    "commands": [
+      "python -m pytest -v --tb=short"
+    ],
+    "workingDirectory": "/workspace/python-calculator-assignment/src/main/python",
+    "env": {},
+    "reportFormat": "junit-xml",
+    "reportPath": "reports/*.xml"
+  },
+  "limits": {
+    "timeoutSeconds": 30,
+    "memoryMb": 1024,
+    "cpuCores": 1.0,
+    "maxOutputBytes": 1000000,
+    "maxProcesses": 100,
+    "networkEnabled": false,
+    "privileged": false
+  },
+  "hiddenTests": {
+    "version": "1",
+    "path": "python-calculator-assignment/hidden-tests/test_calculator.py",
+    "testClass": "test_calculator"
+  },
+  "requiredRules": [
+    {
+      "rule": "HAS_TYPE_HINTS",
+      "value": "add",
+      "severity": "FLAG",
+      "message": "Function 'add' must have complete type hints (param and return annotations)"
+    },
+    {
+      "rule": "HAS_TYPE_HINTS",
+      "value": "subtract",
+      "severity": "FLAG",
+      "message": "Function 'subtract' must have complete type hints (param and return annotations)"
+    },
+    {
+      "rule": "HAS_TYPE_HINTS",
+      "value": "multiply",
+      "severity": "FLAG",
+      "message": "Function 'multiply' must have complete type hints (param and return annotations)"
+    },
+    {
+      "rule": "HAS_TYPE_HINTS",
+      "value": "divide",
+      "severity": "FLAG",
+      "message": "Function 'divide' must have complete type hints (param and return annotations)"
+    },
+    {
+      "rule": "HAS_TYPE_HINTS",
+      "value": "power",
+      "severity": "FLAG",
+      "message": "Function 'power' must have complete type hints (param and return annotations)"
+    }
+  ],
+  "suspiciousRules": [
+    {
+      "rule": "CONSTANT_RETURN",
+      "severity": "FLAG",
+      "message": "Function appears to return a hardcoded constant"
+    },
+    {
+      "rule": "PRINT_ONLY_FUNCTION",
+      "severity": "FLAG",
+      "message": "Function contains only a print statement"
+    },
+    {
+      "rule": "EMPTY_FUNCTION",
+      "severity": "FLAG",
+      "message": "Function body is empty"
+    }
+  ],
+  "dbVerification": {
+    "applicable": false,
+    "strategy": "NO_OP",
+    "config": {}
+  },
+  "metadata": {
+    "description": "Python Calculator with type hints",
+    "difficulty": "EASY"
+  },
+  "execution": {
+    "strategy": "PYTEST",
+    "testCommand": "PYTEST",
+    "timeoutSeconds": 30
+  },
+  "assignmentType": "CORE_PYTHON"
+}

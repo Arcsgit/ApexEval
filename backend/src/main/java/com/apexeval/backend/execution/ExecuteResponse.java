@@ -19,4 +19,8 @@ public class ExecuteResponse {
         this.results = results;
         this.executionTimeMs = executionTimeMs;
     }
+
+    public List<TestResult> getResults() {
+        return results;
+    }
 }

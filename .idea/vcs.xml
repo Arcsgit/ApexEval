@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/workspaces/student-1" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/workspaces/student-1/generic-stack-assignment" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/workspaces/student-2" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/workspaces/student-3" vcs="Git" />
   </component>

@@ -23,4 +23,12 @@ public class DbVerificationResult {
         this.passed = passed;
         this.details = details;
     }
+
+    public Boolean getPassed() {
+        return passed;
+    }
+
+    public boolean isApplicable() {
+        return applicable;
+    }
 }

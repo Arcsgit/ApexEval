@@ -20,7 +20,7 @@
       "rule": "HAS_CLASS",
       "value": "MovieWatchlistManagementSystem",
       "severity": "FLAG",
-      "message": "Required main application class MovieWatchlistManagementSystem is missing"
+      "message": "Class MovieWatchlistManagementSystem is required"
     },
     {
       "rule": "HAS_METHOD",

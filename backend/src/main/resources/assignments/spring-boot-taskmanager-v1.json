@@ -1,0 +1,97 @@
+{
+  "schemaVersion": "1.0",
+  "assignmentId": "spring-boot-taskmanager-v1",
+  "version": 1,
+  "status": "APPROVED",
+  "technology": "JAVA",
+  "framework": "SPRING_BOOT",
+  "evaluationMode": "CLI",
+  "runtime": {
+    "image": "apexeval/student-workspace:latest",
+    "version": "17",
+    "env": {}
+  },
+  "build": {
+    "commands": [
+      "mvn compile"
+    ],
+    "workingDirectory": "/workspace/spring-boot-assignment",
+    "env": {}
+  },
+  "test": {
+    "commands": [
+      "mvn test"
+    ],
+    "workingDirectory": "/workspace/spring-boot-assignment",
+    "env": {},
+    "reportFormat": "junit-xml",
+    "reportPath": "target/surefire-reports/*.xml"
+  },
+  "limits": {
+    "timeoutSeconds": 120,
+    "memoryMb": 1024,
+    "cpuCores": 1.0,
+    "maxOutputBytes": 1000000,
+    "maxProcesses": 100,
+    "networkEnabled": false,
+    "privileged": false
+  },
+  "hiddenTests": {
+    "version": "1",
+    "path": "spring-boot-assignment/hidden-tests/com/apexeval/assignment/TaskManagerApplicationTest.java",
+    "testClass": "com.apexeval.assignment.TaskManagerApplicationTest"
+  },
+  "requiredRules": [
+    {
+      "rule": "HAS_CLASS",
+      "value": "TaskManagerApplication",
+      "severity": "FLAG",
+      "message": "Required Spring Boot main class TaskManagerApplication is missing"
+    },
+    {
+      "rule": "HAS_ANNOTATION",
+      "value": "SpringBootApplication",
+      "severity": "FLAG",
+      "message": "Main class must be annotated with @SpringBootApplication"
+    },
+    {
+      "rule": "HAS_ANNOTATION",
+      "value": "RestController",
+      "severity": "FLAG",
+      "message": "Controller class must be annotated with @RestController"
+    },
+    {
+      "rule": "HAS_METHOD",
+      "value": "main",
+      "severity": "FLAG",
+      "message": "main(String[] args) method is required"
+    }
+  ],
+  "suspiciousRules": [
+    {
+      "rule": "CONSTANT_RETURN",
+      "severity": "FLAG",
+      "message": "Method appears to return a hardcoded constant"
+    },
+    {
+      "rule": "EMPTY_METHOD",
+      "severity": "FLAG",
+      "message": "Method body is empty"
+    }
+  ],
+  "dbVerification": {
+    "applicable": false,
+    "strategy": "NO_OP",
+    "config": {}
+  },
+  "metadata": {
+    "description": "Spring Boot Task Manager REST API",
+    "difficulty": "MEDIUM"
+  },
+  "execution": {
+    "strategy": "SPRING_BOOT",
+    "testCommand": "MAVEN_TEST",
+    "timeoutSeconds": 120
+  },
+  "assignmentType": "SPRING_BOOT_TASK"
+}

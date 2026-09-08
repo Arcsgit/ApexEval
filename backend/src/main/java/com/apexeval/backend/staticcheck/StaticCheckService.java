@@ -52,7 +52,7 @@ public class StaticCheckService {
 
         List<StaticFinding> required = new ArrayList<>();
         for (StaticRuleSpec rule : safeList(spec.getRequiredRules())) {
-            required.add(evaluateRequiredRule(rule, parsedFiles));
+            required.addAll(evaluateRequiredRule(rule, parsedFiles));
         }
 
         List<StaticFinding> suspicious = new ArrayList<>();
@@ -90,7 +90,13 @@ public class StaticCheckService {
         return parsed;
     }
 
-    private StaticFinding evaluateRequiredRule(StaticRuleSpec rule, List<ParsedFile> files) {
+    private List<StaticFinding> evaluateRequiredRule(StaticRuleSpec rule, List<ParsedFile> files) {
+        // METHOD_FORBIDDEN can match multiple methods; emit one finding per match
+        // so the student sees every violation, not just the first one.
+        if ("METHOD_FORBIDDEN".equals(rule.getRule())) {
+            return evaluateForbiddenMethodRule(rule, files);
+        }
+
         RuleMatch match = switch (rule.getRule()) {
             case "USES_TYPE" -> findTypeUsage(files, rule.getValue());
             case "HAS_CLASS" -> findClassDeclaration(files, rule.getValue(), false);
@@ -100,21 +106,117 @@ public class StaticCheckService {
             case "OVERRIDES_METHOD" -> findOverriddenMethod(files, rule.getValue());
             case "HAS_ANNOTATION" -> findAnnotation(files, rule.getValue());
             case "EXTENDS_TYPE" -> findExtendsType(files, rule.getTarget(), rule.getValue());
-            case "METHOD_FORBIDDEN" -> null;
             case "CONTAINS_TEXT" -> findText(files, rule.getValue());
             default -> throw new StaticCheckException("Unsupported required rule: " + rule.getRule());
         };
 
-        if ("METHOD_FORBIDDEN".equals(rule.getRule())) {
-            RuleMatch forbidden = findForbiddenMethod(files, rule.getValueList());
-            StaticFinding finding = finding(rule, forbidden == null);
-            if (forbidden != null) apply(finding, forbidden);
-            return finding;
+        StaticFinding finding = finding(rule, match != null, /*negated*/ false);
+        if (match != null) {
+            apply(finding, match);
+        } else {
+            // Rule was NOT satisfied. Pinpoint the closest related node so the
+            // student has an actionable file/line/column rather than a blank
+            // finding. This is student-specific diagnostics data - never
+            // cached across submissions.
+            RuleMatch violation = findViolationLocation(rule, files);
+            if (violation != null) apply(finding, violation);
         }
+        return List.of(finding);
+    }
 
-        StaticFinding finding = finding(rule, match != null);
-        if (match != null) apply(finding, match);
-        return finding;
+    private List<StaticFinding> evaluateForbiddenMethodRule(StaticRuleSpec rule, List<ParsedFile> files) {
+        List<RuleMatch> forbidden = findAllForbiddenMethods(files, rule.getValueList());
+        if (forbidden.isEmpty()) {
+            return List.of(finding(rule, true, /*negated*/ false));
+        }
+        List<StaticFinding> findings = new ArrayList<>();
+        for (RuleMatch match : forbidden) {
+            String perMatchMessage = rule.getMessage() + " (found '" + match.symbol() + "')";
+            StaticFinding finding = new StaticFinding(
+                    rule.getRule(),
+                    rule.getValue(),
+                    rule.getSeverity(),
+                    perMatchMessage,
+                    false
+            );
+            apply(finding, match);
+            findings.add(finding);
+        }
+        return findings;
+    }
+
+    private RuleMatch findViolationLocation(StaticRuleSpec rule, List<ParsedFile> files) {
+        return switch (rule.getRule()) {
+            case "USES_TYPE" -> findClosestTypeUsage(files, rule.getValue());
+            case "HAS_CLASS", "HAS_INTERFACE" ->
+                    findFirstTypeDeclaration(files, rule.getValue());
+            case "HAS_INHERITANCE", "EXTENDS_TYPE" ->
+                    findFirstTypeDeclaration(files, rule.getTarget());
+            case "HAS_METHOD" -> findFirstMethod(files);
+            case "OVERRIDES_METHOD" -> findFirstMethod(files);
+            case "HAS_ANNOTATION" -> findFirstAnnotation(files);
+            case "CONTAINS_TEXT" -> null;
+            default -> null;
+        };
+    }
+
+    private RuleMatch findClosestTypeUsage(List<ParsedFile> files, String requiredType) {
+        // Prefer a type reference in the same conceptual family (e.g. for the
+        // required type "ArrayList" we want to point at any java.util.List
+        // implementation the student wrote, like "LinkedList"). Falls back to
+        // the very first type reference if nothing in the family exists.
+        String family = collectionFamily(requiredType);
+        for (ParsedFile file : files) {
+            Optional<ClassOrInterfaceType> familyMatch = file.unit().findAll(ClassOrInterfaceType.class).stream()
+                    .filter(t -> sameFamily(t.getNameAsString(), family))
+                    .findFirst();
+            if (familyMatch.isPresent()) return RuleMatch.of(file, familyMatch.get(), familyMatch.get().getNameAsString());
+        }
+        for (ParsedFile file : files) {
+            Optional<ClassOrInterfaceType> anyMatch = file.unit().findAll(ClassOrInterfaceType.class).stream().findFirst();
+            if (anyMatch.isPresent()) return RuleMatch.of(file, anyMatch.get(), anyMatch.get().getNameAsString());
+        }
+        return null;
+    }
+
+    private static String collectionFamily(String typeName) {
+        if (typeName == null) return "";
+        return switch (typeName) {
+            case "ArrayList", "LinkedList", "Vector", "Stack", "ArrayDeque" -> "List";
+            case "HashSet", "TreeSet", "LinkedHashSet" -> "Set";
+            case "HashMap", "TreeMap", "LinkedHashMap", "Hashtable" -> "Map";
+            case "PriorityQueue" -> "Queue";
+            default -> typeName;
+        };
+    }
+
+    private static boolean sameFamily(String actual, String expectedFamily) {
+        if (actual == null || expectedFamily == null || expectedFamily.isEmpty()) return false;
+        return actual.equals(expectedFamily) || collectionFamily(actual).equals(expectedFamily);
+    }
+
+    private RuleMatch findFirstTypeDeclaration(List<ParsedFile> files, String nameHint) {
+        for (ParsedFile file : files) {
+            Optional<ClassOrInterfaceDeclaration> match = file.unit().findAll(ClassOrInterfaceDeclaration.class).stream().findFirst();
+            if (match.isPresent()) return RuleMatch.of(file, match.get(), match.get().getNameAsString());
+        }
+        return null;
+    }
+
+    private RuleMatch findFirstMethod(List<ParsedFile> files) {
+        for (ParsedFile file : files) {
+            Optional<MethodDeclaration> match = file.unit().findAll(MethodDeclaration.class).stream().findFirst();
+            if (match.isPresent()) return RuleMatch.of(file, match.get(), match.get().getNameAsString());
+        }
+        return null;
+    }
+
+    private RuleMatch findFirstAnnotation(List<ParsedFile> files) {
+        for (ParsedFile file : files) {
+            Optional<AnnotationExpr> match = file.unit().findAll(AnnotationExpr.class).stream().findFirst();
+            if (match.isPresent()) return RuleMatch.of(file, match.get(), match.get().getNameAsString());
+        }
+        return null;
     }
 
     private List<StaticFinding> evaluateSuspiciousRule(StaticRuleSpec rule, List<ParsedFile> files) {
@@ -139,6 +241,17 @@ public class StaticCheckService {
     }
 
     private StaticFinding finding(StaticRuleSpec rule, boolean satisfied) {
+        return finding(rule, satisfied, false);
+    }
+
+    /**
+     * Build a finding. When {@code negated} is true, the rule's
+     * "presence = satisfied" semantics are inverted (used by METHOD_FORBIDDEN,
+     * where finding a forbidden method means the rule is violated and a
+     * per-violation message like "Forbidden method 'addMovie' was found at
+     * line 9" is more useful than the generic rule message).
+     */
+    private StaticFinding finding(StaticRuleSpec rule, boolean satisfied, boolean negated) {
         return new StaticFinding(
                 rule.getRule(), rule.getValue(), rule.getSeverity(), rule.getMessage(), satisfied
         );
@@ -247,6 +360,24 @@ public class StaticCheckService {
             }
         }
         return null;
+    }
+
+    /**
+     * Return one match per occurrence of any forbidden method name. Used to
+     * emit a separate finding per violation so the student sees every
+     * offending method, not just the first one.
+     */
+    private List<RuleMatch> findAllForbiddenMethods(List<ParsedFile> files, List<String> names) {
+        if (names == null || names.isEmpty()) return List.of();
+        List<RuleMatch> matches = new ArrayList<>();
+        for (ParsedFile file : files) {
+            for (MethodDeclaration method : file.unit().findAll(MethodDeclaration.class)) {
+                if (names.contains(method.getNameAsString())) {
+                    matches.add(RuleMatch.of(file, method, method.getNameAsString()));
+                }
+            }
+        }
+        return matches;
     }
 
     private List<RuleMatch> constantReturns(List<ParsedFile> files) {

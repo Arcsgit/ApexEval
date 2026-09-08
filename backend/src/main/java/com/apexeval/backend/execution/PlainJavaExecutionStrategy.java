@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -25,8 +26,8 @@ import java.util.stream.Stream;
 @Component
 public class PlainJavaExecutionStrategy implements ExecutionStrategy {
 
-    private static final String WORKDIR = "/work";
-    private static final String REPORTS = WORKDIR + "/reports";
+    private static final String WORKDIR = "/config/workspace";
+    private static final String REPORTS = "/tmp/reports";
 
     private final AssignmentRegistry assignmentRegistry;
     private final AssignmentPathValidator pathValidator;
@@ -105,14 +106,28 @@ public class PlainJavaExecutionStrategy implements ExecutionStrategy {
     private void copyHiddenTest(GenericContainer<?> container, AssignmentConfig config)
             throws IOException {
         Path hiddenTest = config.getHiddenTestFile();
-        if (!Files.exists(hiddenTest)) {
-            throw new ExecutionException("Hidden test file not found at " + hiddenTest);
+
+        // Try container path first (/opt/fixtures/... due to docker-compose mount),
+        // then fall back to host path
+        String hiddenTestPath = config.getSpecification().getHiddenTestPath();
+        Path containerPath = Paths.get("/opt/fixtures", hiddenTestPath);
+        Path actualHiddenTest = containerPath.toFile().exists() ? containerPath : hiddenTest;
+        if (!actualHiddenTest.toFile().exists()) {
+            throw new ExecutionException("Hidden test file not found at container path or host path");
         }
 
-        String relative = config.getTestClassName().replace('.', '/') + ".java";
+        // Mirror the same relative path under WORKDIR/src/ so javac picks it up
+        // together with the student sources (the build-helper-maven-plugin is
+        // not available in this minimal image; the console launcher needs the
+        // compiled class on the classpath).
+        String relative = Paths.get(hiddenTestPath).toString().replace('\\', '/');
+        if (relative.startsWith("/")) {
+            relative = relative.substring(1);
+        }
+        String target = WORKDIR + "/src/" + relative;
         container.copyFileToContainer(
-                Transferable.of(Files.readAllBytes(hiddenTest)),
-                WORKDIR + "/src/" + relative
+                Transferable.of(Files.readAllBytes(actualHiddenTest)),
+                target
         );
     }
 

@@ -1,0 +1,25 @@
+{
+  "info": { "name": "ApexEval API Collection", "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json" },
+  "item": [
+    {
+      "name": "run-test (Java generic)",
+      "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "url": { "raw": "http://localhost:8080/api/run-test", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api","run-test"] }, "body": { "mode": "raw", "raw": "{\"workspacePath\":\"/Users/archit/projectS/ApexEval/workspaces/student-1\",\"assignmentPath\":\"generic-stack-assignment\",\"assignmentId\":\"generic-stack-v1\",\"lastTestedCommit\":\"\"}" } }
+    },
+    {
+      "name": "run-test (Python)",
+      "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "url": { "raw": "http://localhost:8080/api/run-test", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api","run-test"] }, "body": { "mode": "raw", "raw": "{\"workspacePath\":\"/Users/archit/projectS/ApexEval/workspaces/student-1\",\"assignmentPath\":\"python-calculator-assignment\",\"assignmentId\":\"python-calculator-v1\",\"lastTestedCommit\":\"\"}" } }
+    },
+    {
+      "name": "static-check (Python)",
+      "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "url": { "raw": "http://localhost:8080/api/static-check", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api","static-check"] }, "body": { "mode": "raw", "raw": "{\"workspacePath\":\"/Users/archit/projectS/ApexEval/workspaces/student-1\",\"assignmentPath\":\"python-calculator-assignment\",\"assignmentId\":\"python-calculator-v1\"}" } }
+    },
+    {
+      "name": "diff",
+      "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "url": { "raw": "http://localhost:8080/api/diff", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api","diff"] }, "body": { "mode": "raw", "raw": "{\"workspacePath\":\"/Users/archit/projectS/ApexEval/workspaces/student-1\",\"assignmentPath\":\"python-calculator-assignment\",\"lastTestedCommit\":\"\"}" } }
+    },
+    {
+      "name": "execute (old strategy)",
+      "request": { "method": "POST", "header": [{"key":"Content-Type","value":"application/json"}], "url": { "raw": "http://localhost:8080/api/execute", "protocol": "http", "host": ["localhost"], "port": "8080", "path": ["api","execute"] }, "body": { "mode": "raw", "raw": "{\"workspacePath\":\"/Users/archit/projectS/ApexEval/workspaces/student-1\",\"assignmentPath\":\"python-calculator-assignment\",\"assignmentId\":\"python-calculator-v1\"}" } }
+    }
+  ]
+}
