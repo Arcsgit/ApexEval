@@ -34,7 +34,9 @@ public class AssignmentConfig {
     }
 
     public String getTestClassName() {
-        return specification.getHiddenTestClass();
+        return specification.getHiddenTestClass() != null
+                ? specification.getHiddenTestClass()
+                : (specification.getHiddenTests() != null ? specification.getHiddenTests().getTestClass() : null);
     }
 
     public int getTimeoutSeconds() {

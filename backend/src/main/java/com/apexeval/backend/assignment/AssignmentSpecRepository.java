@@ -72,10 +72,13 @@ public class AssignmentSpecRepository {
             );
         }
 
-        if (spec.getAssignmentType() == null
-                || spec.getExecution() == null) {
+        // Support both old format (assignmentType + execution) and new format (technology + runtime + build + test + limits)
+        boolean hasOldFormat = spec.getAssignmentType() != null && spec.getExecution() != null;
+        boolean hasNewFormat = spec.getTechnology() != null && spec.getRuntime() != null && spec.getBuild() != null && spec.getTest() != null && spec.getLimits() != null;
+
+        if (!hasOldFormat && !hasNewFormat) {
             throw new IllegalStateException(
-                    "Incomplete assignment specification: "
+                    "Incomplete assignment specification (needs either old format: assignmentType + execution, or new format: technology + runtime + build + test + limits): "
                             + spec.getAssignmentId()
             );
         }

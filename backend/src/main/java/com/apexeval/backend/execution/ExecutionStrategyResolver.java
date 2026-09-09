@@ -1,5 +1,6 @@
 package com.apexeval.backend.execution;
 
+import com.apexeval.backend.technology.Framework;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -31,7 +32,7 @@ public class ExecutionStrategyResolver {
             String assignmentId
     ) {
         AssignmentConfig config = assignmentRegistry.get(assignmentId);
-        String strategyName = config.getSpecification().getExecution().getStrategy();
+        String strategyName = resolveStrategyName(config);
         ExecutionStrategy strategy = strategiesByType.get(strategyName);
 
         if (strategy == null) {
@@ -39,5 +40,17 @@ public class ExecutionStrategyResolver {
         }
 
         return strategy.execute(workspacePath, assignmentPath, assignmentId);
+    }
+
+    private String resolveStrategyName(AssignmentConfig config) {
+        if (config.getSpecification().getExecution() != null) {
+            return config.getSpecification().getExecution().getStrategy();
+        }
+
+        Framework framework = config.getSpecification().getFramework();
+        if (framework == Framework.SPRING_BOOT) {
+            return "SPRING_BOOT";
+        }
+        return "PLAIN_JAVA";
     }
 }

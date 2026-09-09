@@ -1,12 +1,17 @@
 /Users/archit/projectS/ApexEval/backend/src/main/java/com/apexeval/backend/ApexEvalApplication.java
+/Users/archit/projectS/ApexEval/backend/src/main/java/com/apexeval/backend/assignment/AssignmentController.java
 /Users/archit/projectS/ApexEval/backend/src/main/java/com/apexeval/backend/assignment/AssignmentManifest.java
 /Users/archit/projectS/ApexEval/backend/src/main/java/com/apexeval/backend/assignment/AssignmentManifestRepository.java
 /Users/archit/projectS/ApexEval/backend/src/main/java/com/apexeval/backend/assignment/AssignmentPathValidator.java
+/Users/archit/projectS/ApexEval/backend/src/main/java/com/apexeval/backend/assignment/AssignmentResponse.java
 /Users/archit/projectS/ApexEval/backend/src/main/java/com/apexeval/backend/assignment/AssignmentSpec.java
 /Users/archit/projectS/ApexEval/backend/src/main/java/com/apexeval/backend/assignment/AssignmentSpecRepository.java
 /Users/archit/projectS/ApexEval/backend/src/main/java/com/apexeval/backend/assignment/DbVerificationSpec.java
 /Users/archit/projectS/ApexEval/backend/src/main/java/com/apexeval/backend/assignment/ExecutionSpec.java
 /Users/archit/projectS/ApexEval/backend/src/main/java/com/apexeval/backend/assignment/StaticRuleSpec.java
+/Users/archit/projectS/ApexEval/backend/src/main/java/com/apexeval/backend/assignment/SubmissionController.java
+/Users/archit/projectS/ApexEval/backend/src/main/java/com/apexeval/backend/assignment/SubmissionResponse.java
+/Users/archit/projectS/ApexEval/backend/src/main/java/com/apexeval/backend/config/CorsConfig.java
 /Users/archit/projectS/ApexEval/backend/src/main/java/com/apexeval/backend/config/JacksonConfig.java
 /Users/archit/projectS/ApexEval/backend/src/main/java/com/apexeval/backend/dbverify/DbVerificationResult.java
 /Users/archit/projectS/ApexEval/backend/src/main/java/com/apexeval/backend/dbverify/DbVerificationStrategy.java

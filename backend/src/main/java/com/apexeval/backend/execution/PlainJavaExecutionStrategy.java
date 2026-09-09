@@ -109,7 +109,11 @@ public class PlainJavaExecutionStrategy implements ExecutionStrategy {
 
         // Try container path first (/opt/fixtures/... due to docker-compose mount),
         // then fall back to host path
-        String hiddenTestPath = config.getSpecification().getHiddenTestPath();
+        String hiddenTestPath = config.getSpecification().getHiddenTestPath() != null
+                ? config.getSpecification().getHiddenTestPath()
+                : (config.getSpecification().getHiddenTests() != null
+                        ? config.getSpecification().getHiddenTests().getPath()
+                        : null);
         Path containerPath = Paths.get("/opt/fixtures", hiddenTestPath);
         Path actualHiddenTest = containerPath.toFile().exists() ? containerPath : hiddenTest;
         if (!actualHiddenTest.toFile().exists()) {

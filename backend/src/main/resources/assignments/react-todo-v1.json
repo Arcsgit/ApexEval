@@ -49,8 +49,13 @@
     "config": {}
   },
   "metadata": {
-    "description": "React Todo Application with Jest tests",
-    "difficulty": "MEDIUM"
+    "courseId": "crs-101",
+    "courseName": "Programming Fundamentals",
+    "title": "React Todo Application",
+    "description": "Build a Todo application using React with functional components and hooks.",
+    "difficulty": "MEDIUM",
+    "week": 3,
+    "day": 3
   },
   "execution": {
     "strategy": "JEST",

@@ -1,0 +1,194 @@
+/* ============================================================
+   ApexEval Design System — CSS Custom Properties
+   ============================================================ */
+
+:root {
+  /* ── Brand Colors ── */
+  --color-white: #ffffff;
+  --color-cream: #FAF3E1;
+  --color-beige: #F5E7C6;
+  --color-orange: #FF6D1F;
+  --color-orange-hover: #e55f17;
+  --color-orange-active: #cc5513;
+  --color-orange-light: rgba(255, 109, 31, 0.08);
+  --color-orange-lighter: rgba(255, 109, 31, 0.04);
+  --color-dark: #222222;
+
+  /* ── Neutral Scale ── */
+  --color-gray-50: #fafafa;
+  --color-gray-100: #f5f5f5;
+  --color-gray-150: #eeeeee;
+  --color-gray-200: #e5e5e5;
+  --color-gray-300: #d4d4d4;
+  --color-gray-400: #a3a3a3;
+  --color-gray-500: #737373;
+  --color-gray-600: #525252;
+  --color-gray-700: #404040;
+  --color-gray-800: #262626;
+  --color-gray-900: #171717;
+
+  /* ── Status / Semantic Colors ── */
+  --color-pass: #16a34a;
+  --color-pass-bg: rgba(22, 163, 74, 0.08);
+  --color-pass-border: rgba(22, 163, 74, 0.2);
+
+  --color-fail: #dc2626;
+  --color-fail-bg: rgba(220, 38, 38, 0.08);
+  --color-fail-border: rgba(220, 38, 38, 0.2);
+
+  --color-flagged: #d97706;
+  --color-flagged-bg: rgba(217, 119, 6, 0.08);
+  --color-flagged-border: rgba(217, 119, 6, 0.2);
+
+  --color-running: #2563eb;
+  --color-running-bg: rgba(37, 99, 235, 0.08);
+  --color-running-border: rgba(37, 99, 235, 0.2);
+
+  --color-queued: #6b7280;
+  --color-queued-bg: rgba(107, 114, 128, 0.08);
+  --color-queued-border: rgba(107, 114, 128, 0.2);
+
+  --color-overdue: #dc2626;
+  --color-overdue-bg: rgba(220, 38, 38, 0.06);
+
+  --color-overridden: #7c3aed;
+  --color-overridden-bg: rgba(124, 58, 237, 0.08);
+  --color-overridden-border: rgba(124, 58, 237, 0.2);
+
+  --color-info: #2563eb;
+  --color-info-bg: rgba(37, 99, 235, 0.08);
+
+  --color-warning: #d97706;
+  --color-warning-bg: rgba(217, 119, 6, 0.08);
+
+  /* ── Surface Colors ── */
+  --surface-primary: var(--color-white);
+  --surface-secondary: var(--color-gray-50);
+  --surface-tertiary: var(--color-gray-100);
+  --surface-elevated: var(--color-white);
+  --surface-sidebar: var(--color-white);
+  --surface-header: var(--color-white);
+  --surface-overlay: rgba(0, 0, 0, 0.4);
+  --surface-cream: var(--color-cream);
+
+  /* ── Border Colors ── */
+  --border-primary: var(--color-gray-200);
+  --border-secondary: var(--color-gray-150);
+  --border-hover: var(--color-gray-300);
+  --border-focus: var(--color-orange);
+  --border-error: var(--color-fail);
+
+  /* ── Text Colors ── */
+  --text-primary: var(--color-dark);
+  --text-secondary: var(--color-gray-600);
+  --text-tertiary: var(--color-gray-500);
+  --text-disabled: var(--color-gray-400);
+  --text-inverse: var(--color-white);
+  --text-link: var(--color-orange);
+
+  /* ── Typography ── */
+  --font-sans: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  --font-header: 'Zodiak', serif;
+  --font-label: 'Neco', serif;
+
+  --text-xs: 0.6875rem;    /* 11px */
+  --text-sm: 0.8125rem;    /* 13px */
+  --text-base: 0.875rem;   /* 14px */
+  --text-md: 0.9375rem;    /* 15px */
+  --text-lg: 1rem;         /* 16px */
+  --text-xl: 1.125rem;     /* 18px */
+  --text-2xl: 1.25rem;     /* 20px */
+  --text-3xl: 1.5rem;      /* 24px */
+  --text-4xl: 1.875rem;    /* 30px */
+
+  --leading-tight: 1.25;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+
+  --weight-normal: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  /* ── Spacing (8px scale) ── */
+  --space-0: 0;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+
+  /* ── Border Radius ── */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 10px;
+  --radius-2xl: 12px;
+  --radius-full: 9999px;
+
+  /* ── Shadows (very restrained) ── */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.06), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.06), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+  --shadow-overlay: 0 16px 48px rgba(0, 0, 0, 0.12);
+
+  /* ── Transitions ── */
+  --transition-fast: 150ms ease;
+  --transition-base: 200ms ease;
+  --transition-slow: 300ms ease;
+
+  /* ── Z-Index ── */
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-overlay: 300;
+  --z-modal: 400;
+  --z-toast: 500;
+
+  /* ── Layout ── */
+  --floating-nav-height: 56px;
+  --floating-nav-top: 12px;
+  --header-height: 56px;
+  --content-max-width: 100%;
+}
+
+/* ── Dark Mode ── */
+[data-theme="dark"] {
+  --surface-primary: #0a0a0a;
+  --surface-secondary: #141414;
+  --surface-tertiary: #1a1a1a;
+  --surface-elevated: #1a1a1a;
+  --surface-sidebar: #111111;
+  --surface-header: #111111;
+  --surface-overlay: rgba(0, 0, 0, 0.6);
+  --surface-cream: #1a1710;
+
+  --border-primary: #2a2a2a;
+  --border-secondary: #222222;
+  --border-hover: #3a3a3a;
+
+  --text-primary: #e5e5e5;
+  --text-secondary: #a3a3a3;
+  --text-tertiary: #737373;
+  --text-disabled: #525252;
+  --text-inverse: #0a0a0a;
+
+  --color-gray-50: #141414;
+  --color-gray-100: #1a1a1a;
+  --color-gray-150: #222222;
+  --color-gray-200: #2a2a2a;
+  --color-gray-300: #3a3a3a;
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.3);
+  --shadow-overlay: 0 16px 48px rgba(0, 0, 0, 0.5);
+}

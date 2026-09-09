@@ -26,10 +26,11 @@ public class AssignmentRegistry {
     public AssignmentConfig get(String assignmentId) {
         AssignmentSpec spec = repository.findById(assignmentId);
 
-        Path hiddenTest = Paths.get(
-                fixturesBasePath,
-                spec.getHiddenTestPath()
-        );
+        String hiddenTestPath = spec.getHiddenTestPath() != null
+                ? spec.getHiddenTestPath()
+                : (spec.getHiddenTests() != null ? spec.getHiddenTests().getPath() : null);
+
+        Path hiddenTest = Paths.get(fixturesBasePath, hiddenTestPath);
 
         return new AssignmentConfig(spec, hiddenTest);
     }

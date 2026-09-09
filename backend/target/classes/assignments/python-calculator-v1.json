@@ -96,8 +96,13 @@
     "config": {}
   },
   "metadata": {
-    "description": "Python Calculator with type hints",
-    "difficulty": "EASY"
+    "courseId": "crs-101",
+    "courseName": "Programming Fundamentals",
+    "title": "Python Calculator with Type Hints",
+    "description": "Build a command-line calculator in Python with full type hints.",
+    "difficulty": "MEDIUM",
+    "week": 3,
+    "day": 1
   },
   "execution": {
     "strategy": "PYTEST",

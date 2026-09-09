@@ -8,16 +8,19 @@ com/apexeval/backend/runner/NativeRunner.class
 com/apexeval/backend/persistence/FindingEntity.class
 com/apexeval/backend/sandbox/SandboxLimits.class
 com/apexeval/backend/assignment/AssignmentManifest$BuildConfig.class
+com/apexeval/backend/assignment/SubmissionController$PaginatedResponse.class
 com/apexeval/backend/execution/ExecuteController.class
 com/apexeval/backend/assignment/AssignmentManifest$DbVerificationConfig.class
 com/apexeval/backend/diff/DiffResponse.class
 com/apexeval/backend/technology/Technology.class
 com/apexeval/backend/staticcheck/StaticCheckService$RuleMatch.class
 com/apexeval/backend/diff/GitDiffService$DiffData.class
+com/apexeval/backend/assignment/SubmissionController$FindingResponse.class
 com/apexeval/backend/persistence/CourseDayEntity.class
 com/apexeval/backend/staticcheck/StaticFinding.class
 com/apexeval/backend/staticcheck/StaticAnalyzerRegistry.class
 com/apexeval/backend/orchestration/RunTestService.class
+com/apexeval/backend/assignment/AssignmentController$1.class
 com/apexeval/backend/orchestration/cache/RedisSubmissionCache.class
 com/apexeval/backend/orchestration/GenericSourceContentHasher$1.class
 com/apexeval/backend/orchestration/WebhookEmitter.class
@@ -28,9 +31,11 @@ com/apexeval/backend/staticcheck/StaticCheckException.class
 com/apexeval/backend/staticcheck/StaticAnalyzer.class
 com/apexeval/backend/orchestration/SourceContentHasher.class
 com/apexeval/backend/ApexEvalApplication.class
+com/apexeval/backend/assignment/SubmissionController$TestResultResponse.class
 com/apexeval/backend/orchestration/RunTestResponse.class
 com/apexeval/backend/runner/RunnerContext.class
 com/apexeval/backend/staticcheck/StaticCheckService$ParsedFile.class
+com/apexeval/backend/assignment/SubmissionController$DiffLineResponse.class
 com/apexeval/backend/technology/EvaluationMode.class
 com/apexeval/backend/assignment/AssignmentManifest$LimitsConfig.class
 com/apexeval/backend/assignment/AssignmentManifest.class
@@ -38,7 +43,9 @@ com/apexeval/backend/orchestration/RunTestRequest.class
 com/apexeval/backend/assignment/AssignmentManifest$HiddenTestsConfig.class
 com/apexeval/backend/persistence/UserRepository.class
 com/apexeval/backend/persistence/CourseDayRepository.class
+com/apexeval/backend/assignment/SubmissionController$DiffFileResponse.class
 com/apexeval/backend/diff/DiffController.class
+com/apexeval/backend/assignment/AssignmentResponse.class
 com/apexeval/backend/staticcheck/StaticCheckResponse.class
 com/apexeval/backend/orchestration/SubmissionCache.class
 com/apexeval/backend/technology/Framework.class
@@ -48,6 +55,7 @@ com/apexeval/backend/persistence/AssignmentEntity.class
 com/apexeval/backend/assignment/AssignmentManifest$RuntimeConfig.class
 com/apexeval/backend/runner/NodeRunner.class
 com/apexeval/backend/sandbox/DockerSandboxExecutor.class
+com/apexeval/backend/config/CorsConfig.class
 com/apexeval/backend/diff/GitDiffException.class
 com/apexeval/backend/staticcheck/PythonStaticAnalyzer.class
 com/apexeval/backend/execution/ExecutionExceptionHandler.class
@@ -58,6 +66,7 @@ com/apexeval/backend/persistence/CourseEnrollmentRepository.class
 com/apexeval/backend/execution/PlainJavaExecutionStrategy.class
 com/apexeval/backend/execution/TestResult.class
 com/apexeval/backend/runner/HiddenTestInstaller.class
+com/apexeval/backend/assignment/AssignmentController.class
 com/apexeval/backend/assignment/AssignmentSpecRepository.class
 com/apexeval/backend/staticcheck/JavaStaticAnalyzer.class
 com/apexeval/backend/runner/EvaluationRunner.class
@@ -74,9 +83,11 @@ com/apexeval/backend/persistence/CourseRepository.class
 com/apexeval/backend/assignment/StaticRuleSpec.class
 com/apexeval/backend/runner/RunnerResult.class
 com/apexeval/backend/execution/SpringBootExecutionStrategy.class
+com/apexeval/backend/assignment/SubmissionController$SubmitCodeRequest.class
 com/apexeval/backend/orchestration/RunTestController.class
 com/apexeval/backend/assignment/DbVerificationSpec.class
 com/apexeval/backend/orchestration/DeterministicResult.class
+com/apexeval/backend/assignment/SubmissionController.class
 com/apexeval/backend/assignment/AssignmentPathValidator.class
 com/apexeval/backend/persistence/FindingRepository.class
 com/apexeval/backend/orchestration/cache/SubmissionCacheFactory.class
@@ -87,6 +98,7 @@ com/apexeval/backend/staticcheck/StaticCheckExceptionHandler.class
 com/apexeval/backend/staticcheck/StaticCheckRequest.class
 com/apexeval/backend/staticcheck/StaticRule.class
 com/apexeval/backend/sandbox/LocalSandboxExecutor.class
+com/apexeval/backend/assignment/SubmissionResponse.class
 com/apexeval/backend/runner/JavaRunner.class
 com/apexeval/backend/persistence/SubmissionEntity.class
 com/apexeval/backend/dbverify/DbVerificationStrategy.class

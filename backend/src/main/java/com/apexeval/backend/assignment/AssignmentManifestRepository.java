@@ -8,6 +8,7 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -249,6 +250,10 @@ public class AssignmentManifestRepository {
             throw new IllegalArgumentException("Unknown assignmentId: " + assignmentId);
         }
         return manifest;
+    }
+
+    public List<AssignmentManifest> findAll() {
+        return new java.util.ArrayList<>(manifests.values());
     }
 
     private void validate(AssignmentManifest manifest, String filename) {

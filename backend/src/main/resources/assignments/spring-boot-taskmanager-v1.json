@@ -85,8 +85,13 @@
     "config": {}
   },
   "metadata": {
-    "description": "Spring Boot Task Manager REST API",
-    "difficulty": "MEDIUM"
+    "courseId": "crs-101",
+    "courseName": "Programming Fundamentals",
+    "title": "Spring Boot Task Manager REST API",
+    "description": "Build a REST API for task management using Spring Boot.",
+    "difficulty": "HARD",
+    "week": 4,
+    "day": 1
   },
   "execution": {
     "strategy": "SPRING_BOOT",

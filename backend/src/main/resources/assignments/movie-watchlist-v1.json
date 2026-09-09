@@ -3,12 +3,40 @@
   "assignmentId": "movie-watchlist-v1",
   "version": 1,
   "status": "APPROVED",
-  "assignmentType": "CORE_JAVA",
-  "language": "JAVA",
-  "javaVersion": 17,
-  "buildTool": "MAVEN",
-  "hiddenTestClass": "com.apexeval.assignment.MovieWatchlistManagementSystemTest",
-  "hiddenTestPath": "movie-watchlist-assignment/hidden-tests/com/apexeval/assignment/MovieWatchlistManagementSystemTest.java",
+  "technology": "JAVA",
+  "framework": "NONE",
+  "evaluationMode": "CLI",
+  "runtime": {
+    "image": "apexeval/student-workspace:latest",
+    "version": "17",
+    "env": {}
+  },
+  "build": {
+    "commands": ["mvn compile"],
+    "workingDirectory": "/workspace/movie-watchlist-assignment",
+    "env": {}
+  },
+  "test": {
+    "commands": ["mvn test"],
+    "workingDirectory": "/workspace/movie-watchlist-assignment",
+    "env": {},
+    "reportFormat": "junit",
+    "reportPath": "target/surefire-reports"
+  },
+  "limits": {
+    "timeoutSeconds": 60,
+    "memoryMb": 1024,
+    "cpuCores": 1.0,
+    "maxOutputBytes": 1000000,
+    "maxProcesses": 100,
+    "networkEnabled": false,
+    "privileged": false
+  },
+  "hiddenTests": {
+    "version": "1",
+    "path": "movie-watchlist-assignment/hidden-tests/com/apexeval/assignment/MovieWatchlistManagementSystemTest.java",
+    "testClass": "com.apexeval.assignment.MovieWatchlistManagementSystemTest"
+  },
   "requiredRules": [
     {
       "rule": "USES_TYPE",
@@ -66,13 +94,18 @@
       "message": "Method body is empty"
     }
   ],
-  "execution": {
-    "strategy": "PLAIN_JAVA",
-    "testCommand": "JUNIT_CONSOLE",
-    "timeoutSeconds": 30
-  },
   "dbVerification": {
     "applicable": false,
-    "strategy": "NO_OP"
+    "strategy": "NO_OP",
+    "config": {}
+  },
+  "metadata": {
+    "courseId": "crs-101",
+    "courseName": "Programming Fundamentals",
+    "title": "Movie Watchlist Manager (Java)",
+    "description": "Build a movie watchlist application that allows users to add, remove, search, and list movies.",
+    "difficulty": "MEDIUM",
+    "week": 2,
+    "day": 3
   }
 }

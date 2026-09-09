@@ -3,12 +3,40 @@
   "assignmentId": "generic-stack-v1",
   "version": 1,
   "status": "APPROVED",
-  "assignmentType": "PLAIN_JAVA",
-  "language": "JAVA",
-  "javaVersion": 17,
-  "buildTool": "MAVEN",
-  "hiddenTestClass": "com.apexeval.assignment.GenericStackTest",
-  "hiddenTestPath": "generic-stack-assignment/hidden-tests/com/apexeval/assignment/GenericStackTest.java",
+  "technology": "JAVA",
+  "framework": "NONE",
+  "evaluationMode": "CLI",
+  "runtime": {
+    "image": "apexeval/student-workspace:latest",
+    "version": "17",
+    "env": {}
+  },
+  "build": {
+    "commands": ["mvn compile"],
+    "workingDirectory": "/workspace/generic-stack-assignment",
+    "env": {}
+  },
+  "test": {
+    "commands": ["mvn test"],
+    "workingDirectory": "/workspace/generic-stack-assignment",
+    "env": {},
+    "reportFormat": "junit",
+    "reportPath": "target/surefire-reports"
+  },
+  "limits": {
+    "timeoutSeconds": 60,
+    "memoryMb": 1024,
+    "cpuCores": 1.0,
+    "maxOutputBytes": 1000000,
+    "maxProcesses": 100,
+    "networkEnabled": false,
+    "privileged": false
+  },
+  "hiddenTests": {
+    "version": "1",
+    "path": "generic-stack-assignment/hidden-tests/com/apexeval/assignment/GenericStackTest.java",
+    "testClass": "com.apexeval.assignment.GenericStackTest"
+  },
   "requiredRules": [
     {
       "rule": "USES_TYPE",
@@ -29,13 +57,18 @@
       "message": "Method contains only a print statement"
     }
   ],
-  "execution": {
-    "strategy": "PLAIN_JAVA",
-    "testCommand": "JUNIT_CONSOLE",
-    "timeoutSeconds": 30
-  },
   "dbVerification": {
     "applicable": false,
-    "strategy": "NO_OP"
+    "strategy": "NO_OP",
+    "config": {}
+  },
+  "metadata": {
+    "courseId": "crs-101",
+    "courseName": "Programming Fundamentals",
+    "title": "Generic Stack Implementation (Java)",
+    "description": "Implement a generic Stack data structure in Java using generics.",
+    "difficulty": "EASY",
+    "week": 2,
+    "day": 1
   }
 }

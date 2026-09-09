@@ -129,7 +129,12 @@
     "config": {}
   },
   "metadata": {
+    "courseId": "crs-101",
+    "courseName": "Programming Fundamentals",
+    "title": "C Linked List Implementation",
     "description": "Singly-linked list of integers with CLI driver",
-    "difficulty": "EASY"
+    "difficulty": "EASY",
+    "week": 1,
+    "day": 2
   }
 }
