@@ -16,6 +16,7 @@ public class RunTestResponse {
     private DbVerificationResult dbVerification;
     private StaticCheckResponse staticCheck;
     private String overallStatus;
+    private String submissionId;
 
     public RunTestResponse() {
     }

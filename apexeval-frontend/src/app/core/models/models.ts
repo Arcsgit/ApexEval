@@ -202,7 +202,7 @@ export interface StaticFinding {
   submissionId: string;
   ruleId: string;
   ruleName: string;
-  severity: FindingSeverity;
+  satisfied: boolean;
   category: FindingCategory;
   message: string;
   file: string;

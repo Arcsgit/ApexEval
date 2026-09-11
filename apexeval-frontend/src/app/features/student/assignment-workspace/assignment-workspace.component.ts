@@ -687,14 +687,15 @@ export class AssignmentWorkspaceComponent implements OnInit, OnDestroy {
     this.submissionsService.runTestWithWorkspace(
       user.workspacePath,
       assignmentPath,
-      a.id
+      a.id,
+      user.id
     ).subscribe({
       next: (result) => {
         console.log('Run test result:', result);
         this.runningCode.set(false);
         // Navigate to result detail page
-        if (result?.overallStatus) {
-          this.router.navigate(['/student/submissions', result.id]);
+        if (result?.submissionId) {
+          this.router.navigate(['/student/submissions', result.submissionId]);
         }
       },
       error: (err) => {

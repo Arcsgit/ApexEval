@@ -2,11 +2,13 @@ package com.apexeval.backend.orchestration;
 
 import com.apexeval.backend.assignment.AssignmentManifest;
 import com.apexeval.backend.assignment.AssignmentManifestRepository;
+import com.apexeval.backend.assignment.SubmissionStore;
 import com.apexeval.backend.dbverify.DbVerificationResult;
 import com.apexeval.backend.dbverify.DbVerificationStrategy;
 import com.apexeval.backend.diff.DiffResponse;
 import com.apexeval.backend.diff.GitDiffService;
 import com.apexeval.backend.execution.ExecuteResponse;
+import com.apexeval.backend.execution.ExecutionException;
 import com.apexeval.backend.execution.ExecutionStrategyResolver;
 import com.apexeval.backend.execution.TestResult;
 import com.apexeval.backend.runner.EvaluationRunner;
@@ -45,6 +47,7 @@ public class RunTestService {
     private final WebhookEmitter webhookEmitter;
     private final AssignmentManifestRepository manifestRepository;
     private final EvaluationRunnerRegistry runnerRegistry;
+    private final SubmissionStore submissionStore;
     private final String fixturesBasePath;
 
     public RunTestService(
@@ -59,6 +62,7 @@ public class RunTestService {
             WebhookEmitter webhookEmitter,
             AssignmentManifestRepository manifestRepository,
             EvaluationRunnerRegistry runnerRegistry,
+            SubmissionStore submissionStore,
             @org.springframework.beans.factory.annotation.Value("${apexeval.fixtures.base-path}") String fixturesBasePath
     ) {
         this.gitDiffService = gitDiffService;
@@ -72,6 +76,7 @@ public class RunTestService {
         this.webhookEmitter = webhookEmitter;
         this.manifestRepository = manifestRepository;
         this.runnerRegistry = runnerRegistry;
+        this.submissionStore = submissionStore;
         this.fixturesBasePath = fixturesBasePath;
     }
 
@@ -118,33 +123,43 @@ public class RunTestService {
             log.info("Execution cache miss: assignmentId={}, assignmentPath={}, sourceHash={}",
                     request.getAssignmentId(), request.getAssignmentPath(), sourceHash);
 
-            if (technology == Technology.JAVA) {
-                execution = executionResolver.executeFor(
-                        request.getWorkspacePath(),
-                        request.getAssignmentPath(),
-                        request.getAssignmentId()
-                );
-            } else {
-                ProjectDescriptor project = buildProjectDescriptor(manifest);
-                RunnerContext context = new RunnerContext(
-                        request.getWorkspacePath(),
-                        request.getAssignmentPath(),
-                        fixturesBasePath,
-                        manifest.getLimits() != null ? Map.of(
-                                "timeoutSeconds", manifest.getLimits().getTimeoutSeconds(),
-                                "memoryMb", manifest.getLimits().getMemoryMb(),
-                                "cpuCores", manifest.getLimits().getCpuCores()
-                        ) : Map.of()
-                );
-                
-                Optional<EvaluationRunner> runnerOpt = runnerRegistry.resolve(project);
-                if (runnerOpt.isEmpty()) {
-                    throw new IllegalStateException("No runner found for technology: " + technology);
+            try {
+                if (technology == Technology.JAVA) {
+                    execution = executionResolver.executeFor(
+                            request.getWorkspacePath(),
+                            request.getAssignmentPath(),
+                            request.getAssignmentId()
+                    );
+                } else {
+                    ProjectDescriptor project = buildProjectDescriptor(manifest);
+                    RunnerContext context = new RunnerContext(
+                            request.getWorkspacePath(),
+                            request.getAssignmentPath(),
+                            fixturesBasePath,
+                            manifest.getLimits() != null ? Map.of(
+                                    "timeoutSeconds", manifest.getLimits().getTimeoutSeconds(),
+                                    "memoryMb", manifest.getLimits().getMemoryMb(),
+                                    "cpuCores", manifest.getLimits().getCpuCores()
+                            ) : Map.of()
+                    );
+
+                    Optional<EvaluationRunner> runnerOpt = runnerRegistry.resolve(project);
+                    if (runnerOpt.isEmpty()) {
+                        throw new IllegalStateException("No runner found for technology: " + technology);
+                    }
+                    EvaluationRunner runner = runnerOpt.get();
+                    RunnerResult runnerResult = runner.evaluate(project, context);
+
+                    execution = convertRunnerResultToExecuteResponse(runnerResult);
                 }
-                EvaluationRunner runner = runnerOpt.get();
-                RunnerResult runnerResult = runner.evaluate(project, context);
-                
-                execution = convertRunnerResultToExecuteResponse(runnerResult);
+            } catch (ExecutionException e) {
+                // A compile/build/runtime failure is a legitimate graded outcome
+                // (FAIL), not a server error - record it as such rather than
+                // surfacing a bare 400 that never makes it into submission history.
+                log.info("Execution failed for assignmentId={}: {}", request.getAssignmentId(), e.getMessage());
+                execution = new ExecuteResponse(
+                        List.of(new TestResult("Compilation failure", false, e.getMessage())), 0
+                );
             }
 
             dbVerification = dbVerificationStrategy.verify(
@@ -163,6 +178,7 @@ public class RunTestService {
         RunTestResponse response = new RunTestResponse(
                 diff, execution, dbVerification, staticCheck, status
         );
+        response.setSubmissionId(submissionStore.recordFromRunTest(request, response, manifest));
         webhookEmitter.emit(new SubmissionEvent(
                 request.getWorkspacePath(), request.getAssignmentId(), status
         ));

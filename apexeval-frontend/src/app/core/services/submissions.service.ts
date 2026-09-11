@@ -12,7 +12,7 @@ import {
 } from '../models';
 import { MOCK_SUBMISSIONS, MOCK_TEST_RESULTS, MOCK_FINDINGS, MOCK_DIFFS } from '../mock';
 import { MOCK_ASSIGNMENTS } from '../mock';
-import { ApiService, SubmitCodeRequest, SubmitCodeResponse, RunTestRequest } from '../api/api.service';
+import { ApiService, SubmitCodeRequest, SubmitCodeResponse, RunTestRequest, RunTestResult } from '../api/api.service';
 
 @Injectable({ providedIn: 'root' })
 export class SubmissionsService {
@@ -51,12 +51,13 @@ export class SubmissionsService {
   }
 
   /** Run test using the actual backend execution endpoint with workspace path */
-  runTestWithWorkspace(workspacePath: string, assignmentPath: string, assignmentId: string): Observable<any> {
+  runTestWithWorkspace(workspacePath: string, assignmentPath: string, assignmentId: string, studentId: string): Observable<RunTestResult> {
     const request: RunTestRequest = {
       workspacePath,
       assignmentPath,
       assignmentId,
-      lastTestedCommit: ''
+      lastTestedCommit: '',
+      studentId
     };
     return this.api.runTestWithWorkspace(request).pipe(
       catchError((error) => {

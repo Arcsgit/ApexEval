@@ -173,8 +173,10 @@ import { LoaderComponent } from '../../../shared/components/loader/loader.compon
                       <h3 class="findings-category">{{ category === 'required' ? 'Required' : 'Suspicious' }}</h3>
                       @for (finding of findingsByCategory(category); track finding.id) {
                         <div class="finding-row">
-                          <div class="finding-severity" [attr.data-severity]="finding.severity">
-                            {{ finding.severity | uppercase }}
+                          <div class="finding-severity" [attr.data-satisfied]="!isProblem(finding)">
+                            {{ finding.category === 'suspicious'
+                                ? (finding.satisfied ? 'Detected' : 'Not Detected')
+                                : (finding.satisfied ? 'Satisfied' : 'Not Satisfied') }}
                           </div>
                           <div class="finding-content">
                             <span class="finding-rule">{{ finding.ruleName }}</span>
@@ -393,11 +395,8 @@ import { LoaderComponent } from '../../../shared/components/loader/loader.compon
       flex-shrink: 0; font-size: 10px; font-weight: var(--weight-bold);
       padding: 2px 6px; border-radius: var(--radius-sm); height: fit-content;
     }
-    .finding-severity[data-severity="critical"] { color: white; background: var(--color-fail); }
-    .finding-severity[data-severity="high"] { color: var(--color-fail); background: var(--color-fail-bg); }
-    .finding-severity[data-severity="medium"] { color: var(--color-flagged); background: var(--color-flagged-bg); }
-    .finding-severity[data-severity="low"] { color: var(--text-secondary); background: var(--color-gray-100); }
-    .finding-severity[data-severity="info"] { color: var(--color-running); background: var(--color-running-bg); }
+    .finding-severity[data-satisfied="true"] { color: var(--color-pass); background: var(--color-pass-bg); }
+    .finding-severity[data-satisfied="false"] { color: var(--color-fail); background: var(--color-fail-bg); }
     .finding-content { flex: 1; min-width: 0; }
     .finding-rule { font-size: var(--text-sm); font-weight: var(--weight-semibold); }
     .finding-message { font-size: var(--text-sm); color: var(--text-secondary); margin-top: 2px; }
@@ -510,6 +509,12 @@ export class ResultDetailComponent implements OnInit {
 
   findingsByCategory(category: string): StaticFinding[] {
     return this.findings().filter(f => f.category === category);
+  }
+
+  // "required" rules should be satisfied; "suspicious" rules should NOT be -
+  // a suspicious pattern being satisfied means it was actually detected.
+  isProblem(finding: StaticFinding): boolean {
+    return finding.category === 'suspicious' ? finding.satisfied : !finding.satisfied;
   }
 
   toggleTest(test: TestResult): void {

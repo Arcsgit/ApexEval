@@ -18,6 +18,16 @@ export interface RunTestRequest {
   assignmentPath: string;
   assignmentId: string;
   lastTestedCommit?: string;
+  studentId?: string;
+}
+
+export interface RunTestResult {
+  diff: unknown;
+  executionResults: unknown;
+  dbVerification: unknown;
+  staticCheck: unknown;
+  overallStatus: string;
+  submissionId?: string;
 }
 
 export interface PaginatedApiResponse<T> {
@@ -59,7 +69,7 @@ export interface FindingApiResponse {
   submissionId: string;
   ruleId: string;
   ruleName: string;
-  severity: string;
+  satisfied: boolean;
   category: string;
   message: string;
   file: string;
@@ -151,8 +161,8 @@ export class ApiService {
     return this.http.post(API_ENDPOINTS.runTest, request);
   }
 
-  runTestWithWorkspace(request: RunTestRequest): Observable<any> {
-    return this.http.post(API_ENDPOINTS.runTest, request);
+  runTestWithWorkspace(request: RunTestRequest): Observable<RunTestResult> {
+    return this.http.post<RunTestResult>(API_ENDPOINTS.runTest, request);
   }
 
   staticCheck(request: any): Observable<any> {
@@ -225,7 +235,7 @@ export class ApiService {
     submissionId: api.submissionId,
     ruleId: api.ruleId,
     ruleName: api.ruleName,
-    severity: api.severity as StaticFinding['severity'],
+    satisfied: api.satisfied,
     category: api.category as StaticFinding['category'],
     message: api.message,
     file: api.file,

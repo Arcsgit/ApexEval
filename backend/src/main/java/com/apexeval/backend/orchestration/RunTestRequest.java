@@ -15,7 +15,17 @@ public class RunTestRequest {
 
     private String lastTestedCommit;
 
+    private String studentId;
+
     public RunTestRequest() {
+    }
+
+    public String getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(String studentId) {
+        this.studentId = studentId;
     }
 
     public String getWorkspacePath() {
